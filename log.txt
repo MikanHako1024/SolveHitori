@@ -10,6 +10,12 @@
 初步测试函数InitMap, PrintMap, ScanMap
 Debug：函数_solve_未对cnt判断
 
+2018.2.24
+补充 system("pause")
+
 
 待 完善一些细节
+
+待 降低时间复杂性
+
 

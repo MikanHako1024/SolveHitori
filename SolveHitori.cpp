@@ -1,8 +1,11 @@
 
+/*
+SolveHitori
+*/
 
-// ¡ö
 
 #include <stdio.h>
+#include <stdlib.h>
 
 //#define MAP_H (4)
 //#define MAP_W (4)
@@ -380,7 +383,7 @@ int main()
 	printf("Answer : \n"); 
 	Solve_Hitori();
 	
-	
+	system("pause");
 	return 0;
 }
 
