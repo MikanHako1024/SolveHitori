@@ -1,4 +1,15 @@
 2018.2.24
 最初的代码
 
+2018.2.24
+注释掉预设Map, Line等数据
+更改预设宽度（由4改8）
+补充函数PrintMap
+完善函数InitLine
+完善函数InitMap
+初步测试函数InitMap, PrintMap, ScanMap
+Debug：函数_solve_未对cnt判断
+
+
+待 完善一些细节
 

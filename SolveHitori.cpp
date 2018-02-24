@@ -4,9 +4,12 @@
 
 #include <stdio.h>
 
-#define MAP_H (4)
-#define MAP_W (4)
+//#define MAP_H (4)
+//#define MAP_W (4)
+#define MAP_H (8)
+#define MAP_W (8)
 
+/*
 int Map[1+MAP_H+1][1+MAP_W+1]={ 
 {-1,-1,-1,-1,-1,-1}, 
 {-1, 1, 2, 2, 3,-1}, 
@@ -15,7 +18,10 @@ int Map[1+MAP_H+1][1+MAP_W+1]={
 {-1, 4, 1, 3, 2,-1}, 
 {-1,-1,-1,-1,-1,-1} 
 };
+*/
+int Map[1+MAP_H+1][1+MAP_W+1];
 
+/*
 int cntofH[1+MAP_H+1][1+MAP_W+1]={ 
 { 0, 0, 0, 0, 0, 0 }, 
 { 0, 1, 2, 1, 0, 0 }, 
@@ -24,7 +30,10 @@ int cntofH[1+MAP_H+1][1+MAP_W+1]={
 { 0, 1, 1, 1, 1, 0 }, 
 { 0, 0, 0, 0, 0, 0 } 
 };
+*/
+int cntofH[1+MAP_H+1][1+MAP_W+1];
 
+/*
 int cntofW[1+MAP_H+1][1+MAP_W+1]={
 { 0, 0, 0, 0, 0, 0 }, 
 { 0, 1, 1, 0, 1, 0 }, 
@@ -33,11 +42,14 @@ int cntofW[1+MAP_H+1][1+MAP_W+1]={
 { 0, 1, 1, 1, 0, 0 }, 
 { 0, 0, 0, 0, 0, 0 } 
 };
+*/
+int cntofW[1+MAP_H+1][1+MAP_W+1];
 
 #define COUNTofH(h, w) (cntofH[h][Map[h][w]])
 #define COUNTofW(h, w) (cntofW[Map[h][w]][w])
 
 
+/*
 int Line[1+MAP_H+1][1+MAP_W+1]={ 
 {-9,-5,-5,-5,-5,-8}, 
 {-4, 0, 1, 0, 0,-4}, 
@@ -46,6 +58,8 @@ int Line[1+MAP_H+1][1+MAP_W+1]={
 {-4, 0, 0, 0, 1,-4}, 
 {-7,-5,-5,-5,-5,-6} 
 }; 
+*/
+int Line[1+MAP_H+1][1+MAP_W+1];
 
 int cntofBlack=4;
 
@@ -67,6 +81,7 @@ line :
 
 
 
+/*
 int flag[1+MAP_H+1][1+MAP_W+1]={ 
 {-1,-1,-1,-1,-1,-1}, 
 {-1, 0, 0, 0, 0,-1}, 
@@ -75,6 +90,9 @@ int flag[1+MAP_H+1][1+MAP_W+1]={
 {-1, 0, 0, 0, 0,-1}, 
 {-1,-1,-1,-1,-1,-1},  
 };
+*/
+int flag[1+MAP_H+1][1+MAP_W+1];
+
 
 int D[5][2]={ {0, 0}, {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
 #define Dh (h+D[dir][0])
@@ -149,15 +167,64 @@ int Check_Cnt() // 检查各行列上是否没有重复数
 
 
 
+void InitMap()
+{
+	int h, w, n;
+	
+	// 内 
+	for(h=1; h<=MAP_H; h++)
+		for(w=1; w<=MAP_W; w++)
+			Map[h][w]=0;
+	
+	// 边 ( 竖, 横 ) 
+	for(h=1; h<=MAP_H; h++)
+	{
+		Map[h][0]=-4;
+	 	Map[h][MAP_W+1]=-4;
+	} 
+	for(w=1; w<=MAP_W; w++)
+	{
+		Map[0][w]=-5;
+	 	Map[MAP_H+1][w]=-5;
+	} 
+	
+	// 角 
+	n=-9;
+	for(h=0; h<=MAP_H+1; h+=MAP_H+1)
+		for(w=0; w<=MAP_W+1; w+=MAP_W+1)
+			Map[h][w]= (n++);
+	
+}
 
 void InitLine()
 {
-	int h, w;
+	int h, w, n;
+	
+	// 内 
 	for(h=1; h<=MAP_H; h++)
 		for(w=1; w<=MAP_W; w++)
 			Line[h][w]=0;
 	cntofBlack=0;
+	
+	// 边 ( 竖, 横 ) 
+	for(h=1; h<=MAP_H; h++)
+	{
+		Line[h][0]=-4;
+	 	Line[h][MAP_W+1]=-4;
+	} 
+	for(w=1; w<=MAP_W; w++)
+	{
+		Line[0][w]=-5;
+	 	Line[MAP_H+1][w]=-5;
+	} 
+	
+	// 角 
+	n=-9;
+	for(h=0; h<=MAP_H+1; h+=MAP_H+1)
+		for(w=0; w<=MAP_W+1; w+=MAP_W+1)
+			Line[h][w]=	(n++);
 }
+
 
 void CalCnt()
 {
@@ -177,15 +244,38 @@ void CalCnt()
 			cntofH[h][t]++;
 			cntofW[t][w]++;
 		}
+	
+	// 待：判断 t 合法之后再执行 
 }
+
 
 void ScanMap()
 {
+	InitMap();
 	int h, w;
 	for(h=1; h<=MAP_H; h++)
 		for(w=1; w<=MAP_W; w++)
 			scanf("%d", &Map[h][w]);
 	CalCnt();
+}
+
+void PrintMap()
+{
+	int h, w;
+	for(h=0; h<=MAP_H+1; h++)
+	{
+		for(w=0; w<=MAP_W+1; w++)
+		{
+			     if( Map[h][w]==-9 )printf("┏");
+			else if( Map[h][w]==-8 )printf("┓");
+			else if( Map[h][w]==-7 )printf("┗");
+			else if( Map[h][w]==-6 )printf("┛");
+			else if( Map[h][w]==-5 )printf("━");
+			else if( Map[h][w]==-4 )printf("┃");
+			else printf("%-2d", Map[h][w]);
+		}
+		printf("\n");
+	}
 }
 
 void PrintLine()
@@ -211,7 +301,13 @@ void PrintLine()
 
 int _solve_(int h, int w)
 {
-	if( h>MAP_H )return Check_White_All();
+	if( h>MAP_H )
+	{
+		if( Check_White_All()==1 )
+			if( Check_Cnt()==1 )  
+				return 1;
+		return 0;
+	}
 	if( w>MAP_W )return _solve_(h+1, 1);
 	
 	if( COUNTofH(h, w)>1 || COUNTofW(h, w)>1 )
@@ -243,7 +339,6 @@ int Solve_Hitori()
 	
 	InitLine();
 	
-	printf("Answer : \n"); 
 	
 	if( _solve_(1, 1)==1 )
 	{
@@ -271,9 +366,18 @@ int main()
 	// test Functions : printLine, CalCount
 	*/
 	
+	/*
+	InitMap();
+	PrintMap();
+	ScanMap();
+	PrintMap();
+	// test Functions : InitMap, PrintMap, ScanMap
+	*/
 	
-	//ScanMap();
 	
+	printf("Question : \n"); 
+	ScanMap();
+	printf("Answer : \n"); 
 	Solve_Hitori();
 	
 	
