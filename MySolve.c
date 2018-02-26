@@ -8,8 +8,6 @@ MySolve
 #define _MYSOLVE
 
 
-#include <stdio.h>
-
 #include "MyData.h"
 #include "MyCalCount.c"
 #include "MyCheck.c"
@@ -54,18 +52,7 @@ int Solve_Hitori()
 	//CalCnt();
 	
 	InitLine();
-	
-	
-	if( _solve_(1, 1)==1 )
-	{
-		PrintLine();
-		return 1;
-	}
-	else 
-	{
-		printf("�޽⣡\n");
-		return 0;
-	}
+	return _solve_(1, 1);
 }
 
 

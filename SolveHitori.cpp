@@ -38,7 +38,8 @@ int main()
 	printf("Question : \n"); 
 	ScanMap();
 	printf("Answer : \n"); 
-	Solve_Hitori();
+	if( Solve_Hitori()==1 )PrintLine();
+	else printf("�޽⣡\n");
 	
 	system("pause");
 	return 0;
